@@ -1,5 +1,7 @@
 int ledPin = 13;
-char parachuteManualDeployCode[] = "123456789";
+char parachuteManualDeployCode[] = "54321";
+char serialString[5];
+int index = 0;
 void setup()
 {
   pinMode(ledPin,OUTPUT);
@@ -7,29 +9,29 @@ void setup()
 }
 void loop()
 {
-  if (Serial.available() > 0 ) 
-  {
-  /*if (Serial.read() == 'D'){
-  //ring the bell briefly
-  digitalWrite(ledPin, HIGH);
-  }
-  else{
-    digitalWrite(ledPin,LOW);
-  }*/
+  if (Serial.available() > 0 )
+ { 
     if (checkParachuteCode())
     {
-      digitalWrite(ledPin,13);
-      Serial.println("Parachute manually deployed"); 
+       digitalWrite(ledPin,13);
+       Serial.println("Parachute manually deployed"); 
     }
   }
 }
 boolean checkParachuteCode()
 {
-  char serialString[10];
-  int index = 0;
     while(Serial.available())
     {
         serialString[index++] = Serial.read();
+        if(serialString[0] != '5')
+          index = 0;
+        Serial.println(serialString[index-1]);
     }
-    return strcmp(serialString, parachuteManualDeployCode) == 0;
+    if ( index == 5 )
+    {
+      index = 0;
+      return strcmp(serialString, parachuteManualDeployCode) == 0;
+    }
+    else
+      return false;
 }
