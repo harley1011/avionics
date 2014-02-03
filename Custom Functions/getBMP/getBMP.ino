@@ -8,8 +8,10 @@
 */
 
 
+//This function stores the data in the format: altitude  temperature  pressure
 
-float getAlt()
+
+float getBMP()
 {
  // Get a new sensor event 
   sensors_event_t event;
@@ -32,14 +34,14 @@ float getAlt()
     float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
  //   Serial.print("Altitude:    "); 
    // Serial.print(bmp.pressureToAltitude(seaLevelPressure,event.pressure,temperature)); 
-    float rocketAltitude = bmp.pressureToAltitude(seaLevelPressure,event.pressure,temperature);
 
   }
   else
   {
     Serial.println("BMP180 Pressure Sensor error");
   }
-  return rocketAltitude
+  bmpData[0] = bmp.pressureToAltitude(seaLevelPressure,event.pressure,temperature);
+  bmpData[1] = temperature;
+  bmpData[2] = event.pressure;
+  bmpData[3] = timer;
 }
-
-

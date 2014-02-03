@@ -10,7 +10,9 @@ uint32_t timer = millis();
 
 //Global variables and constants
 
-float gpsData[14] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0); // Initialize the array that will hold data from the GPS sensor
+float dofData[9] = {0,0,0,0,0,0,0,0,0}; //9 channels
+float gpsData[15] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; // 
+float bmpData[3] = {0,0,0}  // Altitude  Temperature  Pressure
 
 const int LED_PIN = 0;
 const int LAUNCH_THRESH = 300; //500 ft altitude detected, switch from mode 1 to mode 2
@@ -113,69 +115,90 @@ SIGNAL(TIMER0_COMPA_vect) {
 void loop()
 {
  
+ //Variable declarations
+ float rocketAltitude = 0;
+  
  delay(500) // intial delay for all electronics
  
- //Read in pressure values
- //Average pressure calculations (to calculate mainChutePressure)
+
  
- 
+ //----------------------------------------------------------------------------------------------------- 
  //Rocket pre-launch algorithm
   do
   {
     //Read 9-DOF data
-    //Read BMP180 data
-    //Read GPS data
-    //Write data to Xbee
-    //Write data to serial logger
+    getBMP(); //Read BMP180 data
+    rocketAltitude = bmpData[0]; //Extract altitude from bmpData array
+    getGPS(); //Read GPS data
+    dataOut(); //Transmit data to SD logger, then Xbee
   }
   while(rocketAltitude<LAUNCH_THRESH) 
  
  
  
+  //----------------------------------------------------------------------------------------------------- 
   //Drogue parachute deployment algorithm 
   //Read and transmit data from all sensors while vertAccel greater than APOGEE_ACCEL_THRESH
   //Send current HIGH to DROGUE parachute e-match when vertAccel less than or equal to APOGEE_ACCEL_THRESH
   do
   {
     //Read 9-DOF data
-    //Read BMP180 data
-    //Read GPS data
-    //Write data to Xbee
-    //Write data to serial logger
+    getBMP(); //Read BMP180 data
+    rocketAltitude = bmpData[0]; //Extract altitude from bmpData array
+    getGPS(); //Read GPS data
+    dataOut(); //Transmit data to SD logger, then Xbee
   }
   while(vertAccel > APOGEE_ACCEL_THRESH)
  
  
   digitalWrite(DROGUE_EMATCH_PIN, HIGH);
   //Read 9-DOF data
-  //Read BMP180 data
-  //Read GPS data
-  //Write data to Xbee
-  //Write data to serial logger
+  getBMP(); //Read BMP180 data
+  rocketAltitude = bmpData[0]; //Extract altitude from bmpData array
+  getGPS(); //Read GPS data
+  dataOut(); //Transmit data to SD logger, then Xbee
   //Include extra statement in serial transmission to indicated when parachute was deployed
   
   
+  
+  //----------------------------------------------------------------------------------------------------- 
   //Main parachute deployment algorithm 
   //Read and transmit data from all sensors while rocketAltitude above MAIN_ALT_THRESH altitude
   //Send current HIGH to MAIN parachute e-match when rocketAltitude equal to or below MAIN_ALT_THRESH
   do
   {
     //Read 9-DOF data
-    //Read BMP180 data
-    //Read GPS data
-    //Write data to Xbee
-    //Write data to serial logger
+    getBMP(); //Read BMP180 data
+    rocketAltitude = bmpData[0]; //Extract altitude from bmpData array
+    getGPS(); //Read GPS data
+    dataOut(); //Transmit data to SD logger, then Xbee
   }
   while(rocketAltitude > MAIN_ALT_THRESH)
   
   
   digitalWrite(MAIN_EMATCH_PIN, HIGH);
   //Read 9-DOF data
-  //Read BMP180 data
-  //Read GPS data
-  //Write data to Xbee
-  //Write data to serial logger
+  getBMP(); //Read BMP180 data
+  rocketAltitude = bmpData[0]; //Extract altitude from bmpData array
+  getGPS(); //Read GPS data
+  dataOut(); //Transmit data to SD logger, then Xbee
   //Include extra statement in serial transmission to indicated when parachute was deployed
- 
+
  
 }
+
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------- 
+//CUSTOM FUNCTIONS HERE!!!
+
+
+
+
+
+
+
+

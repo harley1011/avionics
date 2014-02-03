@@ -84,5 +84,6 @@ gpsData[11] = GPS.speed;  //Measured in knots
 gpsData[12] = GPS.angle;
 gpsData[13] = GPS.altitude;  //Measured in centimeters
 gpsData[14] = GPS.satellites;  //Number of satellites
+gpsData[15] = timer;
 
 }
