@@ -4,6 +4,10 @@
 // Xbee: "Serial"
 // OpenLog: "Serial1"
 
+//IMPORTANT: This code needs to be updated to work with OpenLog serial to SD logger. 
+//Commands need to be added to control OpenLog ( https://github.com/sparkfun/OpenLog.wiki.git )
+
+
 void dataOut()
 {
   
