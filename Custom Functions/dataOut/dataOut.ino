@@ -1,5 +1,5 @@
 //This is a function that will output all of the data from the GPS sensor (specify model),
-//the BMP180 pressure sensor, and the 9-DOF sensor stick to the OpenLog SD logger first
+//the BMP180 pressure sensor, and the 9-DOF sensor stick, separated by two tab stops, to the OpenLog SD logger first
 //and then the Xbee Pro 900
 // Xbee: "Serial"
 // OpenLog: "Serial1"
@@ -16,8 +16,8 @@ void dataOut()
   {
   Serial1.print(dofData[i]);
   Serial1.print("    ");
-  Serial.print(dofData[i]
-  Serial.print("    ");
+  Serial2.print(dofData[i]
+  Serial2.print("    ");
   }
   
   //Send all BMP180 data, 4 channels
@@ -25,8 +25,8 @@ void dataOut()
   {
   Serial1.print(bmpData[i]);
   Serial1.print("    ");
-  Serial.print(bmpData[i]);
-  Serial.print("    ");
+  Serial2.print(bmpData[i]);
+  Serial2.print("    ");
   }
   
   //Send all GPS data, 16 channels
@@ -34,8 +34,8 @@ void dataOut()
   {
   Serial1.print(gpsData[i]);
   Serial1.print("    ");
-  Serial.print(gpsData[i]);
-  Serial.print("    ");
+  Serial2.print(gpsData[i]);
+  Serial2.print("    ");
   }
   
 }

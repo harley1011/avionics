@@ -38,9 +38,9 @@ void setup()
 //SERIAL PORT INITIALIZATIONS 
   
 //Xbee ("Serial") and SD Logger ("Serial1") communicate at 9600 baud rate, while the GPS ("Serial2") uses 115200
-  Serial.begin(9600); //Xbee
+  Serial.begin(115200); //GPS
   Serial1.begin(9600); //SD Logger
-  Serial2.begin(115200); //GPS  
+  Serial2.begin(9600); //Xbee  
 
 //-----------------------------------------------------------------------------------------------------
 //GPS INITIALIZATION

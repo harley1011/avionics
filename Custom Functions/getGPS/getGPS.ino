@@ -8,17 +8,15 @@
 // Tested and works great with the Adafruit Ultimate GPS module
 // using MTK33x9 chipset
 //    ------> http://www.adafruit.com/products/746
-// Pick one up today at the Adafruit electronics shop 
-// and help support open source hardware & software! -ada
-
+//
 // If you're using a GPS module:
 // Connect the GPS Power pin to 5V
 // Connect the GPS Ground pin to ground
 // If using hardware serial (e.g. Arduino Mega):
 //   Connect the GPS TX (transmit) pin to Arduino RX1, RX2 or RX3
 //   Connect the GPS RX (receive) pin to matching TX1, TX2 or TX3
-
-
+//
+//
 // NOTE: "gpsData" array must be declared outside of this function or as a global variable
 // Be sure to clear the gpsData array after each cycle through void loop() function
 
