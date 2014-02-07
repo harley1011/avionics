@@ -12,7 +12,7 @@ PFont parachuteLaunch;
 
 void setup() {
   println(Serial.list());
-  myPort = new Serial(this,Serial.list()[0], 9600);
+ // myPort = new Serial(this,Serial.list()[0], 9600);
   size(800, 500);
   rectColor = color(#D0D0D0 );
   rectHighlight = color(51);
@@ -33,9 +33,18 @@ void draw() {
   textFont(parachuteLaunch,16);
   fill(255,0,0);
   text("Deploy parachute!", 25,50);
+  selectComPort();
   listSensorsOnline ();
-
   readSensorDataAndDraw();
+}
+void selectComPort()
+{
+  for( int i = 0; i < Serial.list().length; i++ )
+ {
+   fill(0);
+   rect(20, 40 + 40*i, 40,10);
+  
+ } 
 }
 void listSensorsOnline ()
 {
