@@ -1,4 +1,5 @@
 import processing.serial.*;
+import controlP5.*;
 int rectX = 20;
 int rectY = 20;      // Position of square button
 int rectSize = 140;     // Diameter of rect
@@ -73,9 +74,11 @@ void readSensorDataAndDraw()
   createText(sensorOnline, greenColor,"X: 0m/s      Y: 0m/s      Z: 0m/s", xCord+ 20,150);
     createText(sensorOnline, greenColor,"GPS coordinates:", xCord,180);
   createText(sensorOnline, greenColor,"X: 0         Y: 0         Z: 0", xCord + 20,200);
-  createText(sensorOnline, greenColor,"Max altitude: 0m", xCord,230);
-  createText(sensorOnline, greenColor,"Current altitude: 0m", xCord,260);
-    createText(sensorOnline, greenColor,"Air pressure: 1atm", xCord,290);
+      createText(sensorOnline, greenColor,"Orientation:", xCord,230);
+  createText(sensorOnline, greenColor,"Yaw: 0         Pitch: 0         Roll: 0", xCord + 20,250);
+  createText(sensorOnline, greenColor,"Max altitude: 0m", xCord,280);
+  createText(sensorOnline, greenColor,"Current altitude: 0m", xCord,310);
+    createText(sensorOnline, greenColor,"Air pressure: 1atm", xCord,340);
   
   
 }
