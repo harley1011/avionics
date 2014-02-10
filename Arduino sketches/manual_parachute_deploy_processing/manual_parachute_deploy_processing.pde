@@ -1,5 +1,10 @@
 import processing.serial.*;
-import controlP5.*;
+int rectSwitchX = 20;
+int rectSwitchY = 410;
+int rectSwitchSizeX = 70;
+int rectSwitchSizeY = 30;
+color rectSwitchColor;
+boolean rectSwitchOver = false;
 int rectX = 20;
 int rectY = 450;      // Position of square button
 int rectSizeX = 180;// Diameter of rect
@@ -16,6 +21,7 @@ void setup() {
   println(Serial.list());
  // myPort = new Serial(this,Serial.list()[0], 9600);
   size(700, 500);
+  rectSwitchColor = color(#D0D0D0 );
   rectColor = color(#D0D0D0 );
   rectHighlight = color(51);
   
@@ -30,9 +36,17 @@ void draw() {
     fill(rectColor);
   }
   stroke(255);
-  rect(rectX, rectY, rectSizeX, rectSizeY);
+   rect(rectX, rectY, rectSizeX, rectSizeY);
+
+    if(rectSwitchOver){
+    fill(rectHighlight);
+  }else{
+    fill(rectColor);
+  }
+  rect(rectSwitchX, rectSwitchY,rectSwitchSizeX,rectSwitchSizeY);
   textFont(font,16);
   fill(255,0,0);
+  text("Enable", rectSwitchX + 5,rectSwitchY +20);
   text("Deploy parachute!", rectX + 5,rectY +20);
   listSensorsOnline ();
   readSensorDataAndDraw();
@@ -84,14 +98,31 @@ void update(int x, int y) {
   } else {
     rectOver = false;
   }
+  if(overSwitchRect(rectSwitchX,rectSwitchY,rectSwitchSizeX, rectSwitchSizeY)) {
+    rectSwitchOver = true;
+  }
+  else {
+    rectSwitchOver = false;
+  }
 }
 
 void mousePressed() {
   if (rectOver) {
     myPort.write("54321");
   }
+  if(rectSwitchOver){
+    rectSwitchColor = "#FF0000";
+  }
 }
-
+boolean overSwitchRect(int x, int y, int width, int height)
+{
+  if (mouseX >= x && mouseX <= x+width && 
+      mouseY >= y && mouseY <= y+height) {
+    return true;
+  } else {
+    return false;
+  } 
+}
 boolean overRect(int x, int y, int width, int height)  {
   if (mouseX >= x && mouseX <= x+width && 
       mouseY >= y && mouseY <= y+height) {
