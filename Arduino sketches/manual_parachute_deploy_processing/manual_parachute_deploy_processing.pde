@@ -1,23 +1,23 @@
 import processing.serial.*;
 import controlP5.*;
 int rectX = 20;
-int rectY = 20;      // Position of square button
-int rectSize = 140;     // Diameter of rect
+int rectY = 450;      // Position of square button
+int rectSizeX = 180;// Diameter of rect
+int rectSizeY = 30;
 color rectColor, baseColor;
 color rectHighlight;
 color currentColor;
 color greenColor = #33FF33;
 boolean rectOver = false;
 Serial myPort;
-PFont parachuteLaunch;
+PFont font = createFont("Courier",16,true);
 
 void setup() {
   println(Serial.list());
  // myPort = new Serial(this,Serial.list()[0], 9600);
-  size(800, 500);
+  size(700, 500);
   rectColor = color(#D0D0D0 );
   rectHighlight = color(51);
-  parachuteLaunch = createFont("Arial",16,true);
   
 }
 
@@ -30,55 +30,45 @@ void draw() {
     fill(rectColor);
   }
   stroke(255);
-  rect(rectX, rectY, rectSize, rectSize/3);
-  textFont(parachuteLaunch,16);
+  rect(rectX, rectY, rectSizeX, rectSizeY);
+  textFont(font,16);
   fill(255,0,0);
-  text("Deploy parachute!", 25,50);
-  selectComPort();
+  text("Deploy parachute!", rectX + 5,rectY +20);
   listSensorsOnline ();
   readSensorDataAndDraw();
-}
-void selectComPort()
-{
-  for( int i = 0; i < Serial.list().length; i++ )
- {
-   fill(0);
-   rect(20, 40 + 40*i, 40,10);
-  
- } 
 }
 void listSensorsOnline ()
 {
   String[] sensorsNameList = {"Accelerometer", "Gyroscope", "Barometric","GPS"}; 
-  PFont sensorOnline = createFont("Arial",16,true);
-  textFont(sensorOnline);
+  textFont(font);
   fill(greenColor);
-  text("Sensors Status: Good", 200, 80);
+  text("Sensors Status: Good", 20, 80);
   for ( int i = 0; i < sensorsNameList.length; i++)
   {
-    text(sensorsNameList[i] + ": Online", 200, 100 + i*20 );
+    text(sensorsNameList[i] + ":", 20, 100 + i*20 );
+    text("Online", 180, 100 + i*20 );
   }
-    createText(sensorOnline,greenColor,"Rocket Status: Launch mode",200,50);
+    createText(font,greenColor,"Rocket Status: Launch mode",20,50);
 }
 void readSensorDataAndDraw()
 {
-  PFont sensorOnline = createFont("Arial",16,true);
-  int xCord = 430;
-  createText(sensorOnline, greenColor,"Sensor Data: ", xCord - 10,50);
+
+  int xCord = 310;
+  createText(font, greenColor,"Sensor Data: ", xCord - 10,50);
   fill(0);
   stroke(greenColor);
   rect(xCord - 10, 55, 350, 400);
-  createText(sensorOnline, greenColor,"Acceleration:", xCord,80);
-  createText(sensorOnline, greenColor,  "X: 0m/s^2    Y: 0m/s^2    Z: 0m/s^2", xCord+ 20,100);
-  createText(sensorOnline, greenColor,"Velocity:", xCord,130);
-  createText(sensorOnline, greenColor,"X: 0m/s      Y: 0m/s      Z: 0m/s", xCord+ 20,150);
-    createText(sensorOnline, greenColor,"GPS coordinates:", xCord,180);
-  createText(sensorOnline, greenColor,"X: 0         Y: 0         Z: 0", xCord + 20,200);
-      createText(sensorOnline, greenColor,"Orientation:", xCord,230);
-  createText(sensorOnline, greenColor,"Yaw: 0         Pitch: 0         Roll: 0", xCord + 20,250);
-  createText(sensorOnline, greenColor,"Max altitude: 0m", xCord,280);
-  createText(sensorOnline, greenColor,"Current altitude: 0m", xCord,310);
-    createText(sensorOnline, greenColor,"Air pressure: 1atm", xCord,340);
+  createText(font, greenColor,"Acceleration(m/s^2):", xCord,80);
+  createText(font, greenColor,  "X: 0    Y: 0    Z: 0", xCord+ 20,100);
+  createText(font, greenColor,"Velocity(m/s):", xCord,130);
+  createText(font, greenColor,  "X: 0    Y: 0    Z: 0", xCord+ 20,150);
+    createText(font, greenColor,"GPS coordinates:", xCord,180);
+  createText(font, greenColor,  "X: 0    Y: 0    Z: 0", xCord + 20,200);
+      createText(font, greenColor,"Orientation:", xCord,230);
+  createText(font, greenColor,"Yaw: 0    Pitch: 0    Roll: 0", xCord + 20,250);
+  createText(font, greenColor,  "Max altitude:     0m", xCord,280);
+  createText(font, greenColor,  "Current altitude: 0m", xCord,310);
+    createText(font, greenColor,"Air pressure:     1atm", xCord,340);
   
   
 }
@@ -89,7 +79,7 @@ void createText( PFont font, color textColor,String text, int x, int y)
   text(text, x, y );
 }
 void update(int x, int y) {
-   if ( overRect(rectX, rectY, rectSize, rectSize/2) ) {
+   if ( overRect(rectX, rectY, rectSizeX, rectSizeY) ) {
     rectOver = true;
   } else {
     rectOver = false;
