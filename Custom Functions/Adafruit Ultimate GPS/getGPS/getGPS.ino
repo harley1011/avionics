@@ -68,20 +68,11 @@ gpsData[0] = GPS.hour;
 gpsData[1] = GPS.minute;
 gpsData[2] = GPS.seconds;
 gpsData[3] = GPS.milliseconds;
-
-//May be unnecessary
-gpsData[4] = GPS.day;
-gpsData[5] = GPS.month;
-gpsData[6] = GPS.year;
-
-gpsData[7] = GPS.fix;  //Boolean 1 if there is a satellite fix, 0 if there isn't
-gpsData[8] = GPS.fixquality;
-gpsData[9] = GPS.latitude;
-gpsData[10] = GPS.longitude;
-gpsData[11] = GPS.speed;  //Measured in knots
-gpsData[12] = GPS.angle;
-gpsData[13] = GPS.altitude;  //Measured in centimeters
-gpsData[14] = GPS.satellites;  //Number of satellites
-gpsData[15] = timer;
+gpsData[4] = GPS.fix;  //Boolean 1 if there is a satellite fix, 0 if there isn't
+gpsData[5] = GPS.latitude;
+gpsData[6] = GPS.longitude;
+gpsData[7] = GPS.speed;  //Measured in knots
+gpsData[8] = GPS.altitude;  //Measured in centimeters
+gpsData[9] = timer;
 
 }
