@@ -19,6 +19,8 @@
 int accelerometer_data[3];
 int gyro_data[3];
 int magnetometer_data[3];
+String serialData; //serial output string
+char separationChar = ' '; //for parsing
 
 char c;
 
@@ -37,35 +39,15 @@ void setup() {
 
 void loop() {
    read_adxl345();
-
-   Serial.print("ACCEL: ");
-   Serial.print(accelerometer_data[0]);
-   Serial.print("\t");
-   Serial.print(accelerometer_data[1]);
-   Serial.print("\t");
-   Serial.print(accelerometer_data[2]);
-   Serial.print("\t");
-
+   serialData = String(accelerometer_data[0]) + separationChar + String(accelerometer_data[1]) + separationChar + String(accelerometer_data[2]) + separationChar;
+ 
    read_hmc5843();
-
-   Serial.print("MAG: ");
-   Serial.print(magnetometer_data[0]);
-   Serial.print(",");
-   Serial.print(magnetometer_data[1]);
-   Serial.print(",");
-   Serial.print(magnetometer_data[2]);
-   Serial.print("\t");
+   serialData += String(magnetometer_data[0]) + separationChar + String(magnetometer_data[1]) + separationChar + String(magnetometer_data[2]) + separationChar;
 
    read_itg3200();
-
-   Serial.print("GYRO: ");
-   Serial.print(gyro_data[0]);
-   Serial.print("\t");
-   Serial.print(gyro_data[1]);
-   Serial.print("\t");
-   Serial.print(gyro_data[2]);
-   Serial.print("\n");
-
+   serialData += String(gyro_data[0]) + separationChar + String(gyro_data[1]) + separationChar + String(gyro_data[2]) + "\n";
+   
+   Serial.print(serialData); //output all on one line; values separated by spaces
    delay(100);
 }
 
@@ -112,26 +94,6 @@ void read_adxl345() {
  }
 }
 
-void init_itg3200() {
-  byte data = 0;
-
-  i2c_write(ITG3200_ADDRESS, ITG3200_REGISTER_DLPF_FS, ITG3200_FULLSCALE | ITG3200_42HZ);
-
-  i2c_read(ITG3200_ADDRESS, ITG3200_REGISTER_DLPF_FS, 1, &data);
-
-  Serial.println((unsigned int)data);
-}
-
-void read_itg3200() {
-  byte bytes[6];
-  memset(bytes,0,6);
-
-  i2c_read(ITG3200_ADDRESS, ITG3200_REGISTER_XMSB, 6, bytes);
-  for (int i=0;i<3;++i) {
-  gyro_data[i] = (int)bytes[2*i + 1] + (((int)bytes[2*i]) << 8);
-  }
-}
-
 void init_hmc5843() {
   byte data = 0;
   
@@ -152,3 +114,22 @@ void read_hmc5843() {
  }
 }
 
+void init_itg3200() {
+  byte data = 0;
+
+  i2c_write(ITG3200_ADDRESS, ITG3200_REGISTER_DLPF_FS, ITG3200_FULLSCALE | ITG3200_42HZ);
+
+  i2c_read(ITG3200_ADDRESS, ITG3200_REGISTER_DLPF_FS, 1, &data);
+
+  Serial.println((unsigned int)data);
+}
+
+void read_itg3200() {
+  byte bytes[6];
+  memset(bytes,0,6);
+
+  i2c_read(ITG3200_ADDRESS, ITG3200_REGISTER_XMSB, 6, bytes);
+  for (int i=0;i<3;++i) {
+  gyro_data[i] = (int)bytes[2*i + 1] + (((int)bytes[2*i]) << 8);
+  }
+}
